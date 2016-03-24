@@ -82,6 +82,7 @@ void ChewingEditor::execFileDialog(DialogType type)
         fileDialog_->setAcceptMode(QFileDialog::AcceptOpen);
         fileDialog_->setFileMode(QFileDialog::ExistingFile);
         fileDialog_->setConfirmOverwrite(false);
+        fileDialog_->setOption(QFileDialog::DontUseNativeDialog, true);
         fileDialog_->selectFile("");
         break;
 
@@ -90,6 +91,7 @@ void ChewingEditor::execFileDialog(DialogType type)
         fileDialog_->setAcceptMode(QFileDialog::AcceptSave);
         fileDialog_->setFileMode(QFileDialog::AnyFile);
         fileDialog_->setConfirmOverwrite(true);
+        fileDialog_->setOption(QFileDialog::DontUseNativeDialog, true);
         fileDialog_->selectFile("chewing.json");
         break;
 
