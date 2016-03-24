@@ -104,6 +104,8 @@ void ChewingEditor::execFileDialog(DialogType type)
 
 void ChewingEditor::selectImportFile()
 {
+    importCounter_ = 0;
+    qDebug() << "importCounter_ = " << importCounter_;
     execFileDialog(DIALOG_IMPORT);
 }
 
@@ -118,7 +120,12 @@ void ChewingEditor::finishFileSelection(const QString& file)
 
     switch (dialogType_) {
     case DIALOG_IMPORT:
-        importUserphrase(file);
+        // avoid native fileDialog being triggered twice in linux distribution
+        if(importCounter_++ == 1)
+            importUserphrase(file);
+
+        qDebug() << "importCounter_ = " << importCounter_;
+
         break;
 
     case DIALOG_EXPORT:
@@ -205,6 +212,9 @@ void ChewingEditor::setupImport()
         model_, SIGNAL(importCompleted(bool, const QString&, size_t, size_t)),
         ui_.get()->notification, SLOT(notifyImportCompleted(bool, const QString&, size_t, size_t))
     );
+
+    // initialize importCounter_ on every import
+    importCounter_ = 0;
 }
 
 void ChewingEditor::setupExport()
