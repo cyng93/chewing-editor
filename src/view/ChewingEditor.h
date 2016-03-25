@@ -73,4 +73,5 @@ private:
 
     QFileDialog *fileDialog_;
     DialogType dialogType_;
+    int importedCounter_;
 };
