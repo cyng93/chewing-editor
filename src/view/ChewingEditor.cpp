@@ -26,8 +26,6 @@
 #include "ChewingImporter.h"
 #include "ChewingExporter.h"
 
-int importedFlag = 0;
-
 ChewingEditor::ChewingEditor(QWidget *parent)
     :QMainWindow{parent}
     ,ui_{new Ui::ChewingEditor}
@@ -72,6 +70,7 @@ void ChewingEditor::execFileDialog(DialogType type)
         fileDialog_->setAcceptMode(QFileDialog::AcceptOpen);
         fileDialog_->setFileMode(QFileDialog::ExistingFile);
         fileDialog_->setConfirmOverwrite(false);
+        fileDialog_->setOption(QFileDialog::DontUseNativeDialog, true);
         fileDialog_->selectFile("");
         break;
 
@@ -80,6 +79,7 @@ void ChewingEditor::execFileDialog(DialogType type)
         fileDialog_->setAcceptMode(QFileDialog::AcceptSave);
         fileDialog_->setFileMode(QFileDialog::AnyFile);
         fileDialog_->setConfirmOverwrite(true);
+        fileDialog_->setOption(QFileDialog::DontUseNativeDialog, true);
         fileDialog_->selectFile("chewing.json");
         break;
 
@@ -92,8 +92,6 @@ void ChewingEditor::execFileDialog(DialogType type)
 
 void ChewingEditor::selectImportFile()
 {
-    importedCounter_ = 0;
-    qDebug() << "importedCounter_ = " << importedCounter_;
     execFileDialog(DIALOG_IMPORT);
 }
 
@@ -108,12 +106,7 @@ void ChewingEditor::finishFileSelection(const QString& file)
 
     switch (dialogType_) {
     case DIALOG_IMPORT:
-        // avoid native fileDialog double trigger in linux distro
-        if(importedCounter_++ == 1)
-            importUserphrase(file);
-
-        qDebug() << "importedCounter_ = " << importedCounter_;
-
+        importUserphrase(file);
         break;
 
     case DIALOG_EXPORT:
@@ -149,8 +142,6 @@ void ChewingEditor::setupFileSelection()
 
 void ChewingEditor::setupImport()
 {
-    // initialize importCounter_
-    importedCounter_ = 0;
 
     connect(
         ui_.get()->actionImport, SIGNAL(triggered()),
