@@ -50,21 +50,9 @@ ChewingEditor::ChewingEditor(QWidget *parent)
     setupAboutWidget();
 
     // exit action
-    shortcut_exit_ = new QShortcut(QKeySequence::Quit, this);
-    connect(
-        shortcut_exit_, SIGNAL(activated()),
-        SLOT(close())
-    );
     connect(
         ui_.get()->actionExit, SIGNAL(triggered()),
         SLOT(close())
-    );
-
-    // modify action
-    shortcut_modify_ = new QShortcut(Qt::Key_Return, this);
-    connect(
-        shortcut_modify_, SIGNAL(activated()),
-        ui_.get()->userphraseView, SLOT(showModifyUserphraseDialog())
     );
 }
 
@@ -164,12 +152,6 @@ void ChewingEditor::setupImport()
     // initialize importCounter_
     importedCounter_ = 0;
 
-    shortcut_import_ = new QShortcut(Qt::CTRL + Qt::Key_I, this);
-    connect(
-        shortcut_import_, SIGNAL(activated()),
-        this, SLOT(selectImportFile())
-    );
-
     connect(
         ui_.get()->actionImport, SIGNAL(triggered()),
         this, SLOT(selectImportFile())
@@ -183,12 +165,6 @@ void ChewingEditor::setupImport()
 
 void ChewingEditor::setupExport()
 {
-    shortcut_export_ = new QShortcut(Qt::CTRL + Qt::Key_E, this);
-    connect(
-        shortcut_export_, SIGNAL(activated()),
-        this, SLOT(selectExportFile())
-    );
-
     connect(
         ui_.get()->actionExport, SIGNAL(triggered()),
         this, SLOT(selectExportFile())
@@ -202,12 +178,6 @@ void ChewingEditor::setupExport()
 
 void ChewingEditor::setupAdd()
 {
-    shortcut_add_ = new QShortcut(QKeySequence::New, this);
-    connect(
-        shortcut_add_, SIGNAL(activated()),
-        ui_.get()->userphraseView, SLOT(showAddUserphraseDialog())
-    );
-
     connect(
         ui_.get()->addButton, SIGNAL(pressed()),
         ui_.get()->userphraseView, SLOT(showAddUserphraseDialog())
@@ -221,12 +191,6 @@ void ChewingEditor::setupAdd()
 
 void ChewingEditor::setupRemove()
 {
-    shortcut_remove_ = new QShortcut(QKeySequence::Delete, this);
-    connect(
-        shortcut_remove_, SIGNAL(activated()),
-        ui_.get()->userphraseView, SLOT(remove())
-    );
-
     connect(
         ui_.get()->removeButton, SIGNAL(pressed()),
         ui_.get()->userphraseView, SLOT(remove())
@@ -240,12 +204,6 @@ void ChewingEditor::setupRemove()
 
 void ChewingEditor::setupRefresh()
 {
-    shortcut_refresh_ = new QShortcut(Qt::CTRL + Qt::Key_R, this);
-    connect(
-        shortcut_refresh_, SIGNAL(activated()),
-        model_, SLOT(refresh())
-    );
-
     connect(
         ui_.get()->refreshButton, SIGNAL(pressed()),
         model_, SLOT(refresh())

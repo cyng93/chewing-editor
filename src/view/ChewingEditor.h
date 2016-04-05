@@ -21,7 +21,6 @@
 
 #include <memory>
 
-#include <QShortcut>
 #include <QFileDialog>
 #include <QMainWindow>
 
@@ -74,10 +73,5 @@ private:
 
     QFileDialog *fileDialog_;
     DialogType dialogType_;
-
-    QShortcut *shortcut_add_, *shortcut_modify_, *shortcut_remove_,
-        *shortcut_refresh_, *shortcut_import_, *shortcut_export_,
-        *shortcut_exit_;
-
     int importedCounter_;
 };
