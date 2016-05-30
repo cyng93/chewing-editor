@@ -77,9 +77,9 @@ ChewingEditor::~ChewingEditor()
 
 void ChewingEditor::execFileDialog(DialogType type)
 {
-    qDebug() << "dialogType_ = " << dialogType_;
-
     dialogType_ = type;
+
+    qDebug() << "dialogType_ = " << dialogType_;
 
     switch (dialogType_) {
     case DIALOG_IMPORT:
@@ -125,10 +125,8 @@ void ChewingEditor::finishFileSelection(const QString& file)
     switch (dialogType_) {
     case DIALOG_IMPORT:
         // Do nothing after the first trigger
-        if (import_count == 0) {
+        if (++import_count == 1)
             importUserphrase(file);
-            import_count++;
-        }
 
         qDebug() << "import_count = " << import_count;
 
